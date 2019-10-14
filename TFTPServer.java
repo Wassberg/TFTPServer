@@ -159,10 +159,11 @@ public class TFTPServer {
 	private String[] ParseRQ(byte[] buf) {
 
 		/*
-		 * 2 bytes string 1 byte string 1 byte
-		 * ------------------------------------------------ | Opcode | Filename | 0 |
-		 * Mode | 0 | ------------------------------------------------ Standard TFTP
-		 * request
+		 * | 2 bytes | string 1 | byte | string | 1 byte |
+		 * 
+		 * | Opcode | Filename | 0 | Mode | 0 |
+		 * 
+		 * Standard TFTP request
 		 */
 
 		ByteBuffer wrap = ByteBuffer.wrap(buf);
@@ -532,7 +533,10 @@ public class TFTPServer {
 	private void sendAck(short block, DatagramSocket sendSocket, InetSocketAddress clientAddr) {
 
 		/*
-		 * 2 bytes 2 bytes ------------------ | Opcode | Block # | ------------------
+		 * | 2 bytes | 2 bytes |
+		 * 
+		 * | Opcode | Block # |
+		 * 
 		 * Standard TFTP acknowledgement
 		 */
 
@@ -565,9 +569,11 @@ public class TFTPServer {
 	private void sendError(int errorCode, String message, DatagramSocket sendSocket, InetSocketAddress clientAddr) {
 
 		/*
-		 * 2 bytes 2 bytes string 1 byte ------------------------------------- | Opcode
-		 * | ErrorCode | ErrMsg | 0 | ------------------------------------- Standard
-		 * TFTP error
+		 * | 2 bytes | 2 bytes | string | 1 byte |
+		 * 
+		 * | Opcode | ErrorCode | ErrMsg | 0 |
+		 * 
+		 * Standard TFTP error
 		 */
 
 		/* Create error packet */
